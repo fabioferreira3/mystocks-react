@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import { getPositions } from "../../services/stock";
 import { BRL } from "../../components/Currency";
@@ -28,18 +28,14 @@ const PositionsPage = () => {
   const [transactionModalOpen, setTransactionModalOpen] =
     useState<boolean>(false);
 
-  useEffect(() => {
-    const fetchPositions = async () => {
-      const response = await getPositions();
-      console.log(response.data);
-      setStockPositions(response.data);
-    };
-    fetchPositions();
+  const fetchPositions = useCallback(async () => {
+    const response = await getPositions();
+    setStockPositions(response.data);
   }, []);
 
   useEffect(() => {
-    console.log(transactionModalOpen);
-  }, [transactionModalOpen]);
+    fetchPositions();
+  }, []);
 
   return (
     <>
@@ -66,7 +62,7 @@ const PositionsPage = () => {
               return (
                 <div
                   key={position.id}
-                  className="flex grid grid-cols-3 gap-4 p-6 bg-gray"
+                  className="flex grid grid-cols-3 gap-4 p-6 bg-gray mt-4"
                 >
                   <div className="text-blueGray font-bold">{position.name}</div>
                   <div className="text-blueGray font-bold">
@@ -89,20 +85,14 @@ const PositionsPage = () => {
             </span>
             <span className="text-blueGray text-xl font-bold mt-2 p-4">
               <div className="bg-gray p-4">
-                {stockPositions.total_units} units
-              </div>
-            </span>
-          </div>
-          <div className="flex grid grid-cols-2">
-            <span className="text-blueGray text-xl font-bold mt-2 p-4">
-              <div className="bg-gray p-4">
                 <span className="text-green font-bold">
-                  <BRL value={stockPositions.total_invested_value} />{" "}
-                </span>
+                  R$ <BRL value={stockPositions.total_invested_value} />
+                </span>{" "}
                 total invested
               </div>
             </span>
           </div>
+          <div className="flex grid grid-cols-2"></div>
         </div>
       </div>
       {transactionModalOpen && (
@@ -111,7 +101,10 @@ const PositionsPage = () => {
           defaultOpen={transactionModalOpen}
           title={"Add Transaction"}
         >
-          <TransactionForm />
+          <TransactionForm
+            cancelEvent={() => setTransactionModalOpen(false)}
+            submitCallback={() => fetchPositions()}
+          />
         </Modal>
       )}
     </>
