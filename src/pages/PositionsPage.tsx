@@ -1,10 +1,10 @@
 import { useCallback, useEffect, useState } from "react";
 
-import { getPositions } from "../../services/stock";
-import { BRL } from "../../components/Currency";
-import { PageHeader } from "../../components/PageHeader";
-import Modal from "../../components/Modal";
-import { TransactionForm } from "../../components/TransactionForm";
+import { getPositions } from "../services/stock";
+import { BRL } from "../components/Currency";
+import { PageHeader } from "../components/PageHeader";
+import Modal from "../components/Modal";
+import { TransactionForm } from "../components/TransactionForm";
 
 interface StockPosition {
   id: string;

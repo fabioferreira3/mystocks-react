@@ -1,9 +1,10 @@
-FROM node:12
+FROM node:14
 
 WORKDIR /usr/src/app/mystocks-react
 
 COPY package*.json ./
-COPY package.lock ./
+COPY tailwind.config.js ./
+COPY craco.config.js ./
 
 RUN npm install
 

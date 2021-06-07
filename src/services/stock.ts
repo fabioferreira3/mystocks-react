@@ -18,6 +18,15 @@ export const getPositions = () => {
   return api.get("/positions");
 };
 
+export const getTransactions = (year: string, month = null) => {
+  return api.get(`/transactions`, {
+    params: {
+      year,
+      month,
+    },
+  });
+};
+
 export const makeTransaction = (transactionData: TransactionData) => {
   return api.post("/transaction", transactionData);
 };

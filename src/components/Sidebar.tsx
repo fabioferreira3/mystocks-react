@@ -11,6 +11,7 @@ export const Sidebar = () => {
       </div>
       <div>
         <MenuItem title="Positions" icon={FiBox} target="/positions" />
+        <MenuItem title="Transactions" icon={FiBox} target="/transactions" />
       </div>
     </div>
   );
