@@ -11,7 +11,7 @@ export const MenuItem = ({ icon: Icon, title, target }: any) => {
       }}
     >
       <Icon className="mr-4 text-white" />
-      <span className="text-white font-bold">{title}</span>
+      <span className="text-white font-bold text-xl">{title}</span>
     </div>
   );
 };

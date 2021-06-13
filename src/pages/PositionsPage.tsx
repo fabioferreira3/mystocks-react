@@ -3,8 +3,6 @@ import { useCallback, useEffect, useState } from "react";
 import { getPositions } from "../services/stock";
 import { BRL } from "../components/Currency";
 import { PageHeader } from "../components/PageHeader";
-import Modal from "../components/Modal";
-import { TransactionForm } from "../components/TransactionForm";
 
 interface StockPosition {
   id: string;
@@ -25,8 +23,6 @@ const PositionsPage = () => {
     total_units: "0",
     total_invested_value: "0",
   });
-  const [transactionModalOpen, setTransactionModalOpen] =
-    useState<boolean>(false);
 
   const fetchPositions = useCallback(async () => {
     const response = await getPositions();
@@ -41,14 +37,6 @@ const PositionsPage = () => {
     <>
       <PageHeader title="Current Positions" />
       <div className="p-6">
-        <div className="flex justify-start">
-          <button
-            className="bg-purple text-white font-bold pl-6 pr-6 pt-2 pb-2"
-            onClick={() => setTransactionModalOpen(true)}
-          >
-            Add Transaction
-          </button>
-        </div>
         <div className="flex grid grid-cols-3 gap-4 p-6">
           <span className="text-blueGray text-xl font-bold">Stock</span>
           <span className="text-blueGray text-xl font-bold">Position</span>
@@ -86,27 +74,14 @@ const PositionsPage = () => {
             <span className="text-blueGray text-xl font-bold mt-2 p-4">
               <div className="bg-gray p-4">
                 <span className="text-green font-bold">
-                  R$ <BRL value={stockPositions.total_invested_value} />
+                  <BRL value={stockPositions.total_invested_value} />
                 </span>{" "}
                 total invested
               </div>
             </span>
           </div>
-          <div className="flex grid grid-cols-2"></div>
         </div>
       </div>
-      {transactionModalOpen && (
-        <Modal
-          setVisibility={setTransactionModalOpen}
-          defaultOpen={transactionModalOpen}
-          title={"Add Transaction"}
-        >
-          <TransactionForm
-            cancelEvent={() => setTransactionModalOpen(false)}
-            submitCallback={() => fetchPositions()}
-          />
-        </Modal>
-      )}
     </>
   );
 };

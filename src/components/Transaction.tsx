@@ -1,17 +1,23 @@
+import React, { useState } from "react";
 import {
   HiArrowCircleUp,
   HiArrowCircleDown,
-  HiDotsVertical,
+  HiPencilAlt,
+  HiTrash,
 } from "react-icons/hi";
+import { TransactionResource } from "../types/transactionTypes";
 
 import { BRL } from "./Currency";
+import Modal from "./Modal";
+import TransactionForm from "./TransactionForm";
 
 interface TransactionProps {
-  transaction: any;
+  transaction: TransactionResource;
 }
 
 const Transaction = ({ transaction }: TransactionProps) => {
-  console.log(transaction);
+  const [transactionModalOpen, setTransactionModalOpen] = useState(false);
+  console.log("eita");
   return (
     <>
       <div className="grid grid-cols-7 flex items-center py-4 border-t border-lightGray rounded">
@@ -30,7 +36,7 @@ const Transaction = ({ transaction }: TransactionProps) => {
             />
           )}
           <div className="flex flex-col ml-2">
-            <div className="text-white font-bold">{transaction.stock}</div>
+            <div className="text-white font-bold">{transaction.stock.name}</div>
             <div className="text-white text-xs">{transaction.type}</div>
           </div>
         </div>
@@ -39,30 +45,50 @@ const Transaction = ({ transaction }: TransactionProps) => {
         </div>
         <div className="flex flex-col">
           <div className="text-white font-bold">
-            R$ <BRL value={transaction.unit_price} />
+            <BRL value={transaction.unit_price} />
           </div>
         </div>
         <div className="flex flex-col">
           <div className="text-white font-bold">
-            R$ <BRL value={transaction.taxes} />
+            <BRL value={transaction.taxes} />
           </div>
         </div>
         <div className="flex flex-col">
           <div className="text-white font-bold">
-            R$ <BRL value={transaction.total_price} />
+            <BRL value={transaction.total_price} />
           </div>
         </div>
         <div className="flex flex-col">
           <div className="text-white font-bold">-</div>
         </div>
-        <div className="flex flex-col">
-          <div className="text-white font-bold">
-            <HiDotsVertical />
+        <div className="flex justify-around">
+          <div
+            className="text-white font-bold cursor-pointer"
+            onClick={() => setTransactionModalOpen(!transactionModalOpen)}
+          >
+            <HiPencilAlt size={"1.5em"} />
+          </div>
+          <div className="text-white font-bold cursor-pointer">
+            <HiTrash size={"1.5em"} />
           </div>
         </div>
       </div>
+      {transactionModalOpen && (
+        <Modal
+          setVisibility={setTransactionModalOpen}
+          defaultOpen={transactionModalOpen}
+          title={"Edit Transaction"}
+        >
+          <TransactionForm
+            type="update"
+            cancelEvent={() => setTransactionModalOpen(false)}
+            submitCallback={() => {}}
+            initialData={transaction}
+          />
+        </Modal>
+      )}
     </>
   );
 };
 
-export default Transaction;
+export default React.memo(Transaction);

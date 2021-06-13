@@ -10,7 +10,6 @@ interface TransactionContainerProps {
 const TransactionContainer = ({
   transactionGroup,
 }: TransactionContainerProps) => {
-  console.log(transactionGroup);
   return (
     <div className="pb-8">
       <div className="flex items-center">

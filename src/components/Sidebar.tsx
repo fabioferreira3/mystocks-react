@@ -1,4 +1,6 @@
 import { FiBox } from "react-icons/fi";
+import { BiShareAlt } from "react-icons/bi";
+
 import { MenuItem } from "./MenuItem";
 
 export const Sidebar = () => {
@@ -11,7 +13,11 @@ export const Sidebar = () => {
       </div>
       <div>
         <MenuItem title="Positions" icon={FiBox} target="/positions" />
-        <MenuItem title="Transactions" icon={FiBox} target="/transactions" />
+        <MenuItem
+          title="Transactions"
+          icon={BiShareAlt}
+          target="/transactions"
+        />
       </div>
     </div>
   );

@@ -23,7 +23,6 @@ export const Button = (props: any) => {
     "text-white",
     "font-medium",
     "sm:w-auto",
-    "sm:ml-3",
     "hover:bg-gray"
   );
 

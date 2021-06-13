@@ -1,14 +1,5 @@
+import { Transaction } from "../types/transactionTypes";
 import api from "./api";
-
-interface TransactionData {
-  wallet_id: string;
-  stock_id: string;
-  date: string;
-  amount: string;
-  unit_price: number;
-  taxes: number;
-  type: string;
-}
 
 export const getStocks = () => {
   return api.get("/stocks");
@@ -27,6 +18,10 @@ export const getTransactions = (year: string, month = null) => {
   });
 };
 
-export const makeTransaction = (transactionData: TransactionData) => {
+export const makeTransaction = (transactionData: Transaction) => {
   return api.post("/transaction", transactionData);
+};
+
+export const updateTransaction = (transactionData: Transaction) => {
+  return api.put(`/transaction/${transactionData.id}`);
 };
