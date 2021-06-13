@@ -23,5 +23,6 @@ export const makeTransaction = (transactionData: Transaction) => {
 };
 
 export const updateTransaction = (transactionData: Transaction) => {
-  return api.put(`/transaction/${transactionData.id}`);
+  console.log(transactionData);
+  return api.put(`/transaction/${transactionData.id}`, transactionData);
 };
