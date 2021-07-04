@@ -36,8 +36,26 @@ const PositionsPage = () => {
   return (
     <>
       <PageHeader title="Current Positions" />
+      <div className="flex flex-col p-4 mt-8">
+        <span className="text-blueGray text-xl font-bold">Summary</span>
+        <div className="flex mt-4">
+          <span className="text-blueGray text-xl font-bold mt-2">
+            <div className="bg-gray p-4 mr-2">
+              {stockPositions.positions.length} stocks
+            </div>
+          </span>
+          <span className="text-blueGray text-xl font-bold mt-2">
+            <div className="bg-gray p-4">
+              <span className="text-green font-bold">
+                <BRL value={stockPositions.total_invested_value} />
+              </span>{" "}
+              total invested
+            </div>
+          </span>
+        </div>
+      </div>
       <div className="p-6">
-        <div className="flex grid grid-cols-3 gap-4 p-6">
+        <div className="flex grid grid-cols-3 gap-4 py-4">
           <span className="text-blueGray text-xl font-bold">Stock</span>
           <span className="text-blueGray text-xl font-bold">Position</span>
           <span className="text-blueGray text-xl font-bold">
@@ -62,24 +80,6 @@ const PositionsPage = () => {
                 </div>
               );
             })}
-        </div>
-        <div className="flex flex-col p-6 mt-8">
-          <span className="text-blueGray text-xl font-bold">Summary</span>
-          <div className="flex grid grid-cols-2">
-            <span className="text-blueGray text-xl font-bold mt-2 p-4">
-              <div className="bg-gray p-4">
-                {stockPositions.positions.length} stocks
-              </div>
-            </span>
-            <span className="text-blueGray text-xl font-bold mt-2 p-4">
-              <div className="bg-gray p-4">
-                <span className="text-green font-bold">
-                  <BRL value={stockPositions.total_invested_value} />
-                </span>{" "}
-                total invested
-              </div>
-            </span>
-          </div>
         </div>
       </div>
     </>
