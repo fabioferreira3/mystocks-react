@@ -17,7 +17,6 @@ interface TransactionProps {
 
 const Transaction = ({ transaction }: TransactionProps) => {
   const [transactionModalOpen, setTransactionModalOpen] = useState(false);
-  console.log("eita");
   return (
     <>
       <div className="grid grid-cols-7 flex items-center py-4 border-t border-lightGray rounded">
