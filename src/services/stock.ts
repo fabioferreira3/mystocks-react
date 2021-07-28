@@ -9,8 +9,8 @@ export const getPositions = () => {
   return api.get("/positions");
 };
 
-export const getTransactions = (year: string, month = null) => {
-  return api.get(`/transactions`, {
+export const getTransactions = (year: string, month = null, page: number) => {
+  return api.get(`/transactions?page=${page}`, {
     params: {
       year,
       month,

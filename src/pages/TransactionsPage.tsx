@@ -1,7 +1,9 @@
 import { useCallback, useEffect, useState } from "react";
+import { groupBy, map } from "lodash";
 
 import Modal from "../components/Modal";
 import { PageHeader } from "../components/PageHeader";
+import Paginator from "../components/Paginator";
 import TransactionContainer from "../components/TransactionContainer";
 import TransactionForm from "../components/TransactionForm";
 import { getTransactions } from "../services/stock";
@@ -10,14 +12,23 @@ const TransactionsPage = () => {
   const [transactions, setTransactions] = useState<any>(null);
   const [transactionModalOpen, setTransactionModalOpen] =
     useState<boolean>(false);
-  const fetchTransactions = useCallback(async () => {
-    const response = await getTransactions("2021");
-    const { data } = response;
-    setTransactions(Object.entries(data));
+  const [pagination, setPagination] = useState({
+    pageCount: 0,
+    currentPage: 1,
+  });
+
+  const fetchTransactions = useCallback(async (page: number) => {
+    const response = await getTransactions("2021", null, page);
+    const transactionsData = response.data.data;
+    setPagination({
+      currentPage: page,
+      pageCount: response.data.last_page,
+    });
+    setTransactions(groupBy(transactionsData, "date"));
   }, []);
 
   useEffect(() => {
-    fetchTransactions().then();
+    fetchTransactions(pagination.currentPage).then();
   }, [fetchTransactions]);
 
   return (
@@ -32,11 +43,18 @@ const TransactionsPage = () => {
         </button>
       </div>
       <div className="px-6 py-6">
+        <Paginator
+          className="mb-6"
+          pageCount={pagination.pageCount}
+          onPageChange={(page: any) => {
+            fetchTransactions(page.selected + 1);
+          }}
+        />
         {transactions &&
-          transactions.map((transactionGroup: any) => {
+          map(transactions, (transactionGroup: any, idx: any) => {
             return (
               <TransactionContainer
-                key={transactionGroup[0]}
+                key={idx}
                 transactionGroup={transactionGroup}
               />
             );
@@ -51,7 +69,7 @@ const TransactionsPage = () => {
           <TransactionForm
             type="new"
             cancelEvent={() => setTransactionModalOpen(false)}
-            submitCallback={() => fetchTransactions()}
+            submitCallback={() => fetchTransactions(pagination.currentPage)}
           />
         </Modal>
       )}
