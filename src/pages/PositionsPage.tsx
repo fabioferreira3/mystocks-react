@@ -6,10 +6,10 @@ import { PageHeader } from "../components/PageHeader";
 
 interface StockPosition {
   id: string;
-  name: string;
-  current_position: string;
+  stock_name: string;
+  units: string;
   current_invested_value: string;
-  actual_total_value: string;
+  current_total_value: string;
 }
 
 interface StockPositionsPayload {
@@ -38,6 +38,7 @@ const PositionsPage = () => {
 
   return (
     <>
+      {console.log(stockPositions)}
       <PageHeader title="Current Positions" />
       <div className="flex flex-col p-4 mt-8">
         <span className="text-blueGray text-xl font-bold">Summary</span>
@@ -82,15 +83,17 @@ const PositionsPage = () => {
                   key={position.id}
                   className="flex grid grid-cols-4 gap-4 p-6 bg-gray mt-4"
                 >
-                  <div className="text-blueGray font-bold">{position.name}</div>
                   <div className="text-blueGray font-bold">
-                    {position.current_position}
+                    {position.stock_name}
+                  </div>
+                  <div className="text-blueGray font-bold">
+                    {position.units}
                   </div>
                   <div className="text-green font-bold">
                     <BRL value={position.current_invested_value} />
                   </div>
                   <div className="text-green font-bold">
-                    <BRL value={position.actual_total_value} />
+                    <BRL value={position.current_total_value} />
                   </div>
                 </div>
               );

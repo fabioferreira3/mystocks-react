@@ -10,7 +10,6 @@ interface TransactionContainerProps {
 const TransactionContainer = ({
   transactionGroup,
 }: TransactionContainerProps) => {
-  console.log(transactionGroup[0].date);
   return (
     <div className="pb-8">
       <div className="flex items-center">

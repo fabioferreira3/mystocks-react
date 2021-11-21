@@ -44,9 +44,7 @@ const TransactionForm = ({
         };
       });
       setStocks(stocksMap);
-    } catch (err) {
-      console.log(err);
-    }
+    } catch (err) {}
   }, []);
 
   useEffect(() => {
@@ -82,7 +80,6 @@ const TransactionForm = ({
       }
       success("Success", "Operation executed successfully");
     } catch (err) {
-      console.log(err);
       error("Error", "Error while executing the operation");
     } finally {
       setSaving(false);
